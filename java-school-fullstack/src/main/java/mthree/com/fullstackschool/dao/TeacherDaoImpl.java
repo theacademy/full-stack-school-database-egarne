@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
@@ -25,12 +26,24 @@ public class TeacherDaoImpl implements TeacherDao {
     public Teacher createNewTeacher(Teacher teacher) {
         //YOUR CODE STARTS HERE
 
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         final String INSERT_TEACHER = "INSERT INTO teacher(tFName, tLName, dept) VALUES(?,?,?)";
-        jdbcTemplate.update(INSERT_TEACHER,
-                teacher.getTeacherFName(),
-                teacher.getTeacherLName());
-        int newId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
-        teacher.setTeacherId(newId);
+
+        jdbcTemplate.update((Connection conn) -> {
+            PreparedStatement statement = conn.prepareStatement(
+                    INSERT_TEACHER,
+                    Statement.RETURN_GENERATED_KEYS
+            );
+
+            statement.setString(1, teacher.getTeacherFName());
+            statement.setString(2, teacher.getTeacherLName());
+            statement.setString(3, teacher.getDept());
+
+            return statement;
+        }, keyHolder);
+
+        teacher.setTeacherId(keyHolder.getKey().intValue());
+
         return teacher;
 
         //YOUR CODE ENDS HERE

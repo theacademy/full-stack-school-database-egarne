@@ -29,13 +29,21 @@ public class StudentDaoImpl implements StudentDao {
     public Student createNewStudent(Student student) {
         //YOUR CODE STARTS HERE
 
-        final String INSERT_STUDENT = "INSERT INTO student(fName, lName) VALUES(?,?)";
-        jdbcTemplate.update(INSERT_STUDENT,
-                student.getStudentFirstName(),
-                student.getStudentLastName());
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
-        int newId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
-        student.setStudentId(newId);
+        final String INSERT_STUDENT = "INSERT INTO student(fName, lName) VALUES(?,?)";
+
+        jdbcTemplate.update((Connection conn) -> {
+            PreparedStatement statement = conn.prepareStatement(
+                    INSERT_STUDENT,
+                    Statement.RETURN_GENERATED_KEYS
+            );
+            statement.setString(1, student.getStudentFirstName());
+            statement.setString(2, student.getStudentLastName());
+            return statement;
+        }, keyHolder);
+
+        student.setStudentId(keyHolder.getKey().intValue());
         return student;
 
         //YOUR CODE ENDS HERE

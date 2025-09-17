@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
+import java.sql.*;
 
 @Repository
 public class CourseDaoImpl implements CourseDao {
@@ -23,15 +24,21 @@ public class CourseDaoImpl implements CourseDao {
     public Course createNewCourse(Course course) {
         //YOUR CODE STARTS HERE
 
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         final String INSERT_COURSE = "INSERT INTO course(courseName, courseDesc, teacherId) VALUES(?,?,?)";
-        jdbcTemplate.update(INSERT_COURSE,
-                course.getCourseName(),
-                course.getCourseDesc(),
-                course.getTeacherId());
 
-        int newId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
-        course.setCourseId(newId);
+        jdbcTemplate.update((Connection conn) -> {
+            PreparedStatement statement = conn.prepareStatement(
+                    INSERT_COURSE,
+                    Statement.RETURN_GENERATED_KEYS
+            );
+            statement.setString(1, course.getCourseName());
+            statement.setString(2, course.getCourseDesc());
+            statement.setInt(3, course.getTeacherId());
+            return statement;
+        }, keyHolder);
 
+        course.setCourseId(keyHolder.getKey().intValue());
         return course;
 
         //YOUR CODE ENDS HERE
