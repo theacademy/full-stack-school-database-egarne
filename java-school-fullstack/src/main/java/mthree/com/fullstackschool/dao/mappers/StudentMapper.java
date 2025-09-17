@@ -13,7 +13,7 @@ public class StudentMapper implements RowMapper<Student> {
         Student student = new Student();
         student.setStudentId(rs.getInt("sid"));
         student.setStudentFirstName(rs.getString("fName"));
-        student.setStudentLastName(rs.getString("fName"));
+        student.setStudentLastName(rs.getString("lName"));
         return student;
 
         //YOUR CODE ENDS HERE
