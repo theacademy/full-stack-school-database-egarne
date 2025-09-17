@@ -86,7 +86,7 @@ public class TeacherDaoImpl implements TeacherDao {
                 t.getTeacherFName(),
                 t.getTeacherLName(),
                 t.getDept(),
-                t.getTeacherId() > 0);
+                t.getTeacherId());
 
         //YOUR CODE ENDS HERE
     }

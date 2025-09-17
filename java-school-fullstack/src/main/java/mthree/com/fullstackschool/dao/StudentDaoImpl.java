@@ -84,7 +84,7 @@ public class StudentDaoImpl implements StudentDao {
         jdbcTemplate.update(UPDATE_STUDENT,
                 student.getStudentFirstName(),
                 student.getStudentLastName(),
-                student.getStudentId() > 0);
+                student.getStudentId());
 
         //YOUR CODE ENDS HERE
     }

@@ -33,13 +33,26 @@ public class CourseServiceImpl implements CourseServiceInterface {
     public Course getCourseById(int id) {
         //YOUR CODE STARTS HERE
 
-        return courseDao.findCourseById(id);
+        try {
+            return courseDao.findCourseById(id);
+        } catch (DataAccessException ex) {
+            Course course = new Course();
+            course.setCourseName("Course Not Found");
+            course.setCourseDesc("Course Not Found");
+            return course;
+        }
 
         //YOUR CODE ENDS HERE
     }
 
     public Course addNewCourse(Course course) {
         //YOUR CODE STARTS HERE
+
+        if(course.getCourseName() == null || course.getCourseDesc() == null) {
+            course.setCourseName("Name blank, course NOT added");
+            course.setCourseDesc("Description blank, course NOT added");
+            return course;
+        }
 
         return courseDao.createNewCourse(course);
 
@@ -49,7 +62,10 @@ public class CourseServiceImpl implements CourseServiceInterface {
     public Course updateCourseData(int id, Course course) {
         //YOUR CODE STARTS HERE
 
-        course.setCourseId(id);
+        if(id != course.getCourseId()) {
+            course.setCourseName("IDs do not match, course not updated");
+            course.setCourseDesc("IDs do not match, course not updated");
+        }
         courseDao.updateCourse(course);
         return course;
 
@@ -61,6 +77,7 @@ public class CourseServiceImpl implements CourseServiceInterface {
 
         courseDao.deleteAllStudentsFromCourse(id);
         courseDao.deleteCourse(id);
+        System.out.println("Course ID: " + id + " deleted");
 
         //YOUR CODE ENDS HERE
     }

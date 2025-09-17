@@ -25,7 +25,7 @@ public class CourseDaoImpl implements CourseDao {
         //YOUR CODE STARTS HERE
 
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-        final String INSERT_COURSE = "INSERT INTO course(courseName, courseDesc, teacherId) VALUES(?,?,?);";
+        final String INSERT_COURSE = "INSERT INTO course(courseCode, courseDesc, teacherId) VALUES(?,?,?);";
 
         jdbcTemplate.update((Connection conn) -> {
             PreparedStatement statement = conn.prepareStatement(
@@ -75,15 +75,15 @@ public class CourseDaoImpl implements CourseDao {
         //YOUR CODE STARTS HERE
 
         final String UPDATE_COURSE = "UPDATE course SET " +
-                "courseName = ?, " +
+                "courseCode = ?, " +
                 "courseDesc = ?, " +
-                "tearcherId = ? " +
+                "teacherId = ? " +
                 "WHERE cid = ?;";
         jdbcTemplate.update(UPDATE_COURSE,
                 course.getCourseName(),
                 course.getCourseDesc(),
                 course.getTeacherId(),
-                course.getCourseId() > 0);
+                course.getCourseId());
 
         //YOUR CODE ENDS HERE
     }
