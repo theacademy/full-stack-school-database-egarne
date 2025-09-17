@@ -53,7 +53,7 @@ public class CourseDaoImpl implements CourseDao {
         //YOUR CODE STARTS HERE
 
         try {
-            final String SELECT_COURSE_BY_ID = "SELECT * FROM course Where cid = ?";
+            final String SELECT_COURSE_BY_ID = "SELECT * FROM course WHERE cid = ?";
             return jdbcTemplate.queryForObject(SELECT_COURSE_BY_ID, new CourseMapper(), id);
 
         } catch(DataAccessException ex) {

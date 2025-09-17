@@ -53,6 +53,7 @@ public class CourseController {
     @PutMapping("/{id}")
     public Course updateCourse(@PathVariable int id, @RequestBody Course course) {
         //YOUR CODE STARTS HERE
+
         if(id != course.getCourseId()) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
         }
