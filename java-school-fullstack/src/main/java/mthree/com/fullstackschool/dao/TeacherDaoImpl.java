@@ -1,7 +1,9 @@
 package mthree.com.fullstackschool.dao;
 
+import mthree.com.fullstackschool.dao.mappers.CourseMapper;
 import mthree.com.fullstackschool.dao.mappers.TeacherMapper;
 import mthree.com.fullstackschool.model.Teacher;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
@@ -23,7 +25,13 @@ public class TeacherDaoImpl implements TeacherDao {
     public Teacher createNewTeacher(Teacher teacher) {
         //YOUR CODE STARTS HERE
 
-        return null;
+        final String INSERT_TEACHER = "INSERT INTO teacher(tFName, tLName, dept) VALUES(?,?,?)";
+        jdbcTemplate.update(INSERT_TEACHER,
+                teacher.getTeacherFName(),
+                teacher.getTeacherLName());
+        int newId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
+        teacher.setTeacherId(newId);
+        return teacher;
 
         //YOUR CODE ENDS HERE
     }
@@ -32,7 +40,8 @@ public class TeacherDaoImpl implements TeacherDao {
     public List<Teacher> getAllTeachers() {
         //YOUR CODE STARTS HERE
 
-        return null;
+        final String SELECT_ALL_TEACHERS = "SELECT * FROM teacher";
+        return jdbcTemplate.query(SELECT_ALL_TEACHERS, new TeacherMapper());
 
         //YOUR CODE ENDS HERE
     }
@@ -41,7 +50,12 @@ public class TeacherDaoImpl implements TeacherDao {
     public Teacher findTeacherById(int id) {
         //YOUR CODE STARTS HERE
 
-        return null;
+        try {
+            final String SELECT_TEACHER_BY_ID = "SELECT * FROM teacher WHERE tid = ?";
+            return jdbcTemplate.queryForObject(SELECT_TEACHER_BY_ID, new TeacherMapper(), id);
+        } catch(DataAccessException ex) {
+            return null;
+        }
 
         //YOUR CODE ENDS HERE
     }
@@ -50,6 +64,16 @@ public class TeacherDaoImpl implements TeacherDao {
     public void updateTeacher(Teacher t) {
         //YOUR CODE STARTS HERE
 
+        final String UPDATE_TEACHER = "UPDATE teacher SET " +
+                "tFName = ?, " +
+                "tLName = ?, " +
+                "dept = ? " +
+                "WHERE tid = ?";
+        jdbcTemplate.update(UPDATE_TEACHER,
+                t.getTeacherFName(),
+                t.getTeacherLName(),
+                t.getDept(),
+                t.getTeacherId());
 
         //YOUR CODE ENDS HERE
     }
@@ -58,6 +82,10 @@ public class TeacherDaoImpl implements TeacherDao {
     public void deleteTeacher(int id) {
         //YOUR CODE STARTS HERE
 
+        final String REMOVE_TEACHER_ID_FROM_COURSE = "UPDATE course SET teacherId = NULL WHERE teacherId = ?";
+        jdbcTemplate.update(REMOVE_TEACHER_ID_FROM_COURSE, id);
+        final String DELETE_TEACHER = "DELETE FROM teacher WHERE tid = ?";
+        jdbcTemplate.update(DELETE_TEACHER, id);
 
         //YOUR CODE ENDS HERE
     }

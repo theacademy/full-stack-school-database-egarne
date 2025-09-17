@@ -67,7 +67,7 @@ public class CourseDaoImpl implements CourseDao {
     public void updateCourse(Course course) {
         //YOUR CODE STARTS HERE
 
-        final String UPDATE_COURSE = "UPDATE course SET" +
+        final String UPDATE_COURSE = "UPDATE course SET " +
                 "courseName = ?, " +
                 "courseDesc = ?, " +
                 "tearcherId = ? " +
