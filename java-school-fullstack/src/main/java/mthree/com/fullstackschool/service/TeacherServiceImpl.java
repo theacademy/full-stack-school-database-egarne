@@ -33,8 +33,7 @@ public class TeacherServiceImpl implements TeacherServiceInterface {
     public Teacher getTeacherById(int id) {
         //YOUR CODE STARTS HERE
 
-
-            return teacherDao.findTeacherById(id);
+        return teacherDao.findTeacherById(id);
 
         //YOUR CODE ENDS HERE
     }
@@ -42,11 +41,6 @@ public class TeacherServiceImpl implements TeacherServiceInterface {
     public Teacher addNewTeacher(Teacher teacher) {
         //YOUR CODE STARTS HERE
 
-
-        if(teacherDao.findTeacherById(teacher.getTeacherId()) != null) {
-            throw new IllegalArgumentException("ERROR: Could not create new because Teacher with Id: "
-                    + teacher.getTeacherId() + " already exists.");
-        }
         return teacherDao.createNewTeacher(teacher);
 
         //YOUR CODE ENDS HERE
@@ -55,11 +49,6 @@ public class TeacherServiceImpl implements TeacherServiceInterface {
     public Teacher updateTeacherData(int id, Teacher teacher) {
         //YOUR CODE STARTS HERE
 
-        Teacher existingTeacher = teacherDao.findTeacherById(id);
-        if(existingTeacher == null) {
-            throw new IllegalArgumentException("ERROR: Could not update because Teacher with Id: "
-                    + id + " does not exist.");
-        }
         teacher.setTeacherId(id);
         teacherDao.updateTeacher(teacher);
         return teacher;
@@ -70,13 +59,7 @@ public class TeacherServiceImpl implements TeacherServiceInterface {
     public void deleteTeacherById(int id) {
         //YOUR CODE STARTS HERE
 
-        Teacher removed = teacherDao.findTeacherById(id);
-        if(removed == null){
-            throw new IllegalArgumentException("ERROR: Could not delete because Teacher with Id: "
-                    + id + " does not exist.");
-        }
         teacherDao.deleteTeacher(id);
-
 
         //YOUR CODE ENDS HERE
     }

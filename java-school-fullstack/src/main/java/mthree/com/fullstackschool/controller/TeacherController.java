@@ -31,12 +31,7 @@ public class TeacherController {
     public Teacher getTeacherById(@PathVariable int id) {
         //YOUR CODE STARTS HERE
 
-        Teacher teacher = teacherServiceImpl.getTeacherById(id);
-        if(teacher == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "ERROR: Could not locate teacher with Id: " + id);
-        }
-        return teacher;
+        return teacherServiceImpl.getTeacherById(id);
 
         //YOUR CODE ENDS HERE
     }
@@ -54,9 +49,6 @@ public class TeacherController {
     public Teacher updateTeacher(@PathVariable int id, @RequestBody Teacher teacher) {
         //YOUR CODE STARTS HERE
 
-        if(id != teacher.getTeacherId()) {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
-        }
         return teacherServiceImpl.updateTeacherData(id, teacher);
 
         //YOUR CODE ENDS HERE

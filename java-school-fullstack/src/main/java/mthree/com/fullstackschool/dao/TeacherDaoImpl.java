@@ -27,7 +27,7 @@ public class TeacherDaoImpl implements TeacherDao {
         //YOUR CODE STARTS HERE
 
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-        final String INSERT_TEACHER = "INSERT INTO teacher(tFName, tLName, dept) VALUES(?,?,?)";
+        final String INSERT_TEACHER = "INSERT INTO teacher(tFName, tLName, dept) VALUES(?,?,?);";
 
         jdbcTemplate.update((Connection conn) -> {
             PreparedStatement statement = conn.prepareStatement(
@@ -53,7 +53,7 @@ public class TeacherDaoImpl implements TeacherDao {
     public List<Teacher> getAllTeachers() {
         //YOUR CODE STARTS HERE
 
-        final String SELECT_ALL_TEACHERS = "SELECT * FROM teacher";
+        final String SELECT_ALL_TEACHERS = "SELECT * FROM teacher;";
         return jdbcTemplate.query(SELECT_ALL_TEACHERS, new TeacherMapper());
 
         //YOUR CODE ENDS HERE
@@ -64,7 +64,7 @@ public class TeacherDaoImpl implements TeacherDao {
         //YOUR CODE STARTS HERE
 
         try {
-            final String SELECT_TEACHER_BY_ID = "SELECT * FROM teacher WHERE tid = ?";
+            final String SELECT_TEACHER_BY_ID = "SELECT * FROM teacher WHERE tid = ?;";
             return jdbcTemplate.queryForObject(SELECT_TEACHER_BY_ID, new TeacherMapper(), id);
         } catch(DataAccessException ex) {
             return null;
@@ -81,12 +81,12 @@ public class TeacherDaoImpl implements TeacherDao {
                 "tFName = ?, " +
                 "tLName = ?, " +
                 "dept = ? " +
-                "WHERE tid = ?";
+                "WHERE tid = ?;";
         jdbcTemplate.update(UPDATE_TEACHER,
                 t.getTeacherFName(),
                 t.getTeacherLName(),
                 t.getDept(),
-                t.getTeacherId());
+                t.getTeacherId() > 0);
 
         //YOUR CODE ENDS HERE
     }
@@ -95,9 +95,9 @@ public class TeacherDaoImpl implements TeacherDao {
     public void deleteTeacher(int id) {
         //YOUR CODE STARTS HERE
 
-        final String REMOVE_TEACHER_ID_FROM_COURSE = "UPDATE course SET teacherId = NULL WHERE teacherId = ?";
+        final String REMOVE_TEACHER_ID_FROM_COURSE = "UPDATE course SET teacherId = NULL WHERE teacherId = ?;";
         jdbcTemplate.update(REMOVE_TEACHER_ID_FROM_COURSE, id);
-        final String DELETE_TEACHER = "DELETE FROM teacher WHERE tid = ?";
+        final String DELETE_TEACHER = "DELETE FROM teacher WHERE tid = ?;";
         jdbcTemplate.update(DELETE_TEACHER, id);
 
         //YOUR CODE ENDS HERE

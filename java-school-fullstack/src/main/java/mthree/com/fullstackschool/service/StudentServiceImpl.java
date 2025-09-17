@@ -30,8 +30,7 @@ public class StudentServiceImpl implements StudentServiceInterface {
     public List<Student> getAllStudents() {
         //YOUR CODE STARTS HERE
 
-        List<Student> students = studentDao.getAllStudents();
-        return students;
+        return studentDao.getAllStudents();
 
         //YOUR CODE ENDS HERE
     }
@@ -39,8 +38,7 @@ public class StudentServiceImpl implements StudentServiceInterface {
     public Student getStudentById(int id) {
         //YOUR CODE STARTS HERE
 
-        Student student = studentDao.findStudentById(id);
-        return student;
+        return studentDao.findStudentById(id);
 
         //YOUR CODE ENDS HERE
     }
@@ -48,12 +46,7 @@ public class StudentServiceImpl implements StudentServiceInterface {
     public Student addNewStudent(Student student) {
         //YOUR CODE STARTS HERE
 
-        if(studentDao.findStudentById(student.getStudentId()) != null) {
-            throw new IllegalArgumentException("ERROR: Could not create new because Student with Id: "
-                    + student.getStudentId() + " already exists.");
-        }
-        Student newStudent = studentDao.createNewStudent(student);
-        return newStudent;
+        return studentDao.createNewStudent(student);
 
         //YOUR CODE ENDS HERE
     }
@@ -61,11 +54,6 @@ public class StudentServiceImpl implements StudentServiceInterface {
     public Student updateStudentData(int id, Student student) {
         //YOUR CODE STARTS HERE
 
-        Student existingStudent = studentDao.findStudentById(id);
-        if(existingStudent == null) {
-            throw new IllegalArgumentException("ERROR: Could not update because Student with Id: "
-                    + id + " does not exist.");
-        }
         student.setStudentId(id);
         studentDao.updateStudent(student);
 
@@ -77,11 +65,6 @@ public class StudentServiceImpl implements StudentServiceInterface {
     public void deleteStudentById(int id) {
         //YOUR CODE STARTS HERE
 
-        Student removedStudent = studentDao.findStudentById(id);
-        if(removedStudent == null) {
-            throw new IllegalArgumentException("ERROR: Could not delete because Student with Id: "
-                    + id + " does not exist.");
-        }
         studentDao.deleteStudent(id);
 
         //YOUR CODE ENDS HERE
@@ -90,18 +73,6 @@ public class StudentServiceImpl implements StudentServiceInterface {
     public void deleteStudentFromCourse(int studentId, int courseId) {
         //YOUR CODE STARTS HERE
 
-        Student removedStudent = studentDao.findStudentById(studentId);
-        if(removedStudent == null) {
-            throw new IllegalArgumentException("ERROR: Student with Id "
-                    + studentId + " does not exist.");
-        }
-
-        Course currentCourse = courseDao.findCourseById(courseId);
-        if(currentCourse == null) {
-            throw new IllegalArgumentException("ERROR: Course with Id "
-                    + courseId + " does not exist.");
-        }
-
         studentDao.deleteStudentFromCourse(studentId, courseId);
 
         //YOUR CODE ENDS HERE
@@ -109,18 +80,6 @@ public class StudentServiceImpl implements StudentServiceInterface {
 
     public void addStudentToCourse(int studentId, int courseId) {
         //YOUR CODE STARTS HERE
-
-        Student student = studentDao.findStudentById(studentId);
-        if(student == null) {
-            throw new IllegalArgumentException("ERROR: Student with Id "
-                    + studentId + " does not exist.");
-        }
-
-        Course currentCourse = courseDao.findCourseById(courseId);
-        if(currentCourse == null) {
-            throw new IllegalArgumentException("ERROR: Course with Id "
-                    + courseId + " does not exist.");
-        }
 
         studentDao.addStudentToCourse(studentId, courseId);
 

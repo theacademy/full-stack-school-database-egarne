@@ -31,12 +31,7 @@ public class CourseController {
     public Course getCourseById(@PathVariable int id) {
         //YOUR CODE STARTS HERE
 
-        Course course = courseService.getCourseById(id);
-        if(course == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "ERROR: Could not locate course with Id: " + id);
-        }
-        return course;
+        return courseService.getCourseById(id);
 
         //YOUR CODE ENDS HERE
     }
@@ -54,11 +49,8 @@ public class CourseController {
     public Course updateCourse(@PathVariable int id, @RequestBody Course course) {
         //YOUR CODE STARTS HERE
 
-        if(id != course.getCourseId()) {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
-        }
-        Course updated = courseService.updateCourseData(id, course);
-        return updated;
+
+        return courseService.updateCourseData(id, course);
 
         //YOUR CODE ENDS HERE
     }

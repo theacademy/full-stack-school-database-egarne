@@ -25,8 +25,7 @@ public class CourseServiceImpl implements CourseServiceInterface {
     public List<Course> getAllCourses() {
         //YOUR CODE STARTS HERE
 
-        List<Course> courses = courseDao.getAllCourses();
-        return courses;
+        return courseDao.getAllCourses();
 
         //YOUR CODE ENDS HERE
     }
@@ -34,8 +33,7 @@ public class CourseServiceImpl implements CourseServiceInterface {
     public Course getCourseById(int id) {
         //YOUR CODE STARTS HERE
 
-        Course course = courseDao.findCourseById(id);
-        return course;
+        return courseDao.findCourseById(id);
 
         //YOUR CODE ENDS HERE
     }
@@ -43,12 +41,7 @@ public class CourseServiceImpl implements CourseServiceInterface {
     public Course addNewCourse(Course course) {
         //YOUR CODE STARTS HERE
 
-        if(courseDao.findCourseById(course.getCourseId()) != null) {
-            throw new IllegalArgumentException("ERROR: Could not create new because Course with Id: "
-                    + course.getCourseId() + " already exists.");
-        }
-        Course newCourse = courseDao.createNewCourse(course);
-        return newCourse;
+        return courseDao.createNewCourse(course);
 
         //YOUR CODE ENDS HERE
     }
@@ -56,11 +49,6 @@ public class CourseServiceImpl implements CourseServiceInterface {
     public Course updateCourseData(int id, Course course) {
         //YOUR CODE STARTS HERE
 
-        Course existingCourse = courseDao.findCourseById(id);
-        if(existingCourse == null) {
-            throw new IllegalArgumentException("ERROR: Could not update because Course with Id: "
-                    + id + " does not exist.");
-        }
         course.setCourseId(id);
         courseDao.updateCourse(course);
         return course;
@@ -71,11 +59,6 @@ public class CourseServiceImpl implements CourseServiceInterface {
     public void deleteCourseById(int id) {
         //YOUR CODE STARTS HERE
 
-        Course removedCourse = courseDao.findCourseById(id);
-        if(removedCourse == null) {
-            throw new IllegalArgumentException("ERROR: Could not delete because Course with Id: "
-                    + id + " does not exist.");
-        }
         courseDao.deleteAllStudentsFromCourse(id);
         courseDao.deleteCourse(id);
 
