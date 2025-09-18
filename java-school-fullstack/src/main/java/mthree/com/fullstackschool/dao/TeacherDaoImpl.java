@@ -82,6 +82,7 @@ public class TeacherDaoImpl implements TeacherDao {
                 "tLName = ?, " +
                 "dept = ? " +
                 "WHERE tid = ?;";
+
         jdbcTemplate.update(UPDATE_TEACHER,
                 t.getTeacherFName(),
                 t.getTeacherLName(),
