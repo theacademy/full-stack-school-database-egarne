@@ -1,9 +1,13 @@
 package mthree.com.fullstackschool.controller;
 
+import mthree.com.fullstackschool.model.Course;
 import mthree.com.fullstackschool.model.Teacher;
 import mthree.com.fullstackschool.service.TeacherServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 
 @RestController
@@ -18,7 +22,7 @@ public class TeacherController {
     public List<Teacher> getAllTeachers() {
         //YOUR CODE STARTS HERE
 
-        return null;
+        return teacherServiceImpl.getAllTeachers();
 
         //YOUR CODE ENDS HERE
     }
@@ -27,7 +31,7 @@ public class TeacherController {
     public Teacher getTeacherById(@PathVariable int id) {
         //YOUR CODE STARTS HERE
 
-        return null;
+        return teacherServiceImpl.getTeacherById(id);
 
         //YOUR CODE ENDS HERE
     }
@@ -36,7 +40,7 @@ public class TeacherController {
     public Teacher addTeacher(@RequestBody Teacher teacher) {
         //YOUR CODE STARTS HERE
 
-        return null;
+        return teacherServiceImpl.addNewTeacher(teacher);
 
         //YOUR CODE ENDS HERE
     }
@@ -45,7 +49,7 @@ public class TeacherController {
     public Teacher updateTeacher(@PathVariable int id, @RequestBody Teacher teacher) {
         //YOUR CODE STARTS HERE
 
-        return null;
+        return teacherServiceImpl.updateTeacherData(id, teacher);
 
         //YOUR CODE ENDS HERE
     }
@@ -54,7 +58,7 @@ public class TeacherController {
     public void deleteTeacher(@PathVariable int id) {
         //YOUR CODE STARTS HERE
 
-
+        teacherServiceImpl.deleteTeacherById(id);
 
         //YOUR CODE ENDS HERE
     }
